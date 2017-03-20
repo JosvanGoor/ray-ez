@@ -6,15 +6,27 @@ Below is a list of things I implemented or am planning to implement, they can be
 * ! - This is implemented but not tested thouroughly
 * \* There is currently a problem with the functionality of this part
 
+## Memory management:
+
+#### Scene objects
+The scene objects are passed to rendermodels as pointer, but the rendermodel will never delete a scene object, as such a scene object may belong to more then 1 rendermodel at the same time and must be deleted manually after the rendermodels are unlinked.
+
+All pointers contained by the scene (shapes & lights) will be destroyed when the scene is destroyed.
+
+#### Material objects
+Material objects are owned by the Shape object that links to it, as such a material object should never be passed to more then 1 shape at a time. There is however one exception to this, The Triangle shape does not take ownedship of a material object. A triangle assumes the material object belongs to the mesh the triangle also belongs to and as such the destruction of the material is the responsibility of the mesh.
+
+For textures a system will be created so that materials can share textures without having ownedship (textures will be destroyed at another point at the end of runtime.)
+
 ## subsystems:
 The framework consists of a selection of classes catergorized by function.
-* !core: contains some generally used functions and the core class.
-* !!main: contians the main-function starting the everything.
+* core: contains some generally used functions and the core class.
+* main: contians the main-function starting the everything.
 
 ### Data
 This category contains classes to parse scenes.
 * !datanode: This class represents an array/object/value in an json file.
-* !!image: This class contains image data and read/write data.
+* image: This class contains image data and read/write data.
 * !json: This file contains json parsing functions
 * !stepdocument: This class contains functions used by parsers.
 
@@ -22,21 +34,21 @@ This category contains classes to parse scenes.
 * !!algebra: contains functions to solve certain formula's
 * !math: contains certain commonly used constants and functions
 * !matrix4x4: this class represents a 4x4 matrix used for translation and projection
-* !vector3: this class represents a 3x1 vector used to contain color and coordinates etc.
+* vector3: this class represents a 3x1 vector used to contain color and coordinates etc.
 * !vector4: ???
 
 ### raytracer
 This category contains certain classes designed specifically for the raytracer framework.
-* !camera: represents a camera in the scene, delivers the rays to be traced.
-    + contains data on dof aswell.
+* camera: represents a camera in the scene, contains information required to setup a viewmodel, image. Also represents DOF and supersampling.
 * !hit: represents a hit-point where a ray hits a shape.
-* !material: represents color and (reflective) characteristics of a material.
-* !ray: represents a ray (orgigin, direction) used to determine hits.
+    + !!subcase for meshes and transparency
+* material: represents color and (reflective) characteristics of a material.
+* ray: represents a ray (orgigin, direction) used to determine hits.
 
 
 ### Lights
 This category contains light-types.
-* !point-light: A light that emits light of a certain color from a certain point
+* point-light: A light that emits light of a certain color from a certain point
 
 ### rendering
 This category contains a base-class for a (virtual)renderer object and subclasses to determine the shading
@@ -44,22 +56,17 @@ This category contains a base-class for a (virtual)renderer object and subclasse
 * !!goochshader: this class renders the scene with gooch shading
     + !!supports toon-edges
 * !!normalshader: (debug-based) this class renders the scene based on surface normals.
-* !!phongshader: this class renders the scene with phong shading
-* !rendermodel: this class is the (virtual) baseclass of all rendermodels.
+* phongshader: this class renders the scene with phong shading
+* rendermodel: this class is the baseclass of all rendermodels.
+    + supports: threading.
     + !!supports: refraction
-    + !!supports: reflection
-    + !!supports: (soft) shadows.
+    + supports: reflection
+    + !supports: (!!soft) shadows.
 
 ### shapes
 This category contains raytracable shapes
 * !!disk: class representing a disk, or plane when radius is set to infinite.
 * !!mesh: class represents a mesh consisting of a multitude of triangles.
-* !shape: baseclass for every shape.
-* !!sphere: class representing a perfect sphere.
+* shape: baseclass for every shape.
+* sphere: class representing a perfect sphere.
 * !!triangle: class represents a (clockwise) triangle.
-
-#### threads
-This category contains threading functionality to ensure maximum performance! :)
-* !!task: this (virtual)class represents a "thing" a thread can do.
-* !!thread: This (virtual) class represents a general purpose thread.
-* !!workerpool: a class that functions as a task-dispensing unit for workerthreads.
