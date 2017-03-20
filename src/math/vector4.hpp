@@ -13,8 +13,8 @@
 #include <sstream>
 #include <typeinfo>
 
-#include "Math.hpp"
-#include "../Core.hpp"
+#include "math.hpp"
+#include "../core.hpp"
 
 namespace math
 {

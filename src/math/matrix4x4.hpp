@@ -26,10 +26,10 @@
 #include <sstream>
 #include <typeinfo>
 
-#include "Math.hpp"
-#include "Vector3.hpp"
-#include "Vector4.hpp"
-#include "../Core.hpp"
+#include "math.hpp"
+#include "vector3.hpp"
+#include "vector4.hpp"
+#include "../core.hpp"
 
 namespace math
 {

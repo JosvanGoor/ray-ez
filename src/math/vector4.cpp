@@ -1,4 +1,4 @@
-#include "Vector4.hpp"
+#include "vector4.hpp"
 
 /*
     Placeholder for makefile use

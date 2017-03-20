@@ -13,13 +13,12 @@
 #include <sstream>
 #include <typeinfo>
 
-#include "Math.hpp"
-#include "../Core.hpp"
+#include "math.hpp"
 
 namespace math
 {
 
-    template<typename T = float> class Vector3 : public Object
+    template<typename T = float> class Vector3
     {
     public:
         T m_x;
@@ -28,6 +27,7 @@ namespace math
 
         //Clean, per-value and copy constructor.
         Vector3() : m_x(), m_y(), m_z() {}
+        Vector3(T v) : m_x(v), m_y(v), m_z(v) {}
         Vector3(T x, T y, T z) : m_x(x), m_y(y), m_z(z) {}
         template<typename U> Vector3(const Vector3<U> &v) : m_x(v.m_x), m_y(v.m_y), m_z(v.m_z) {}
 
@@ -85,7 +85,7 @@ namespace math
         }
 
         //clamps this vector
-        void clamp(T min, T max)
+        void clamp(T min = 0, T max = 1)
         {
             m_x = m_x < min ? min : (m_x > max ? max : m_x);
             m_y = m_y < min ? min : (m_y > max ? max : m_y);
@@ -102,6 +102,12 @@ namespace math
             rval.m_z = m_z < min ? min : (m_z > max ? max : m_z);
 
             return rval;
+        }
+
+        Vector3<T> reflect_over(const Vector3<T> &normal) const
+        {
+            Vector3<T> ret = (*this - 2 * (*this).dot(normal) * normal);
+            return ret.normalized();
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -154,12 +160,12 @@ namespace math
             return *this;
         }
 
-        template<typename U> bool operator==(const Vector3<U> &v)
+        template<typename U> bool operator==(const Vector3<U> &v) const
         {
             return (m_x == v.m_x) && (m_y == v.m_y) && (m_z == v.m_z);
         }
 
-        template<typename U> bool operator!=(const Vector3<U> &v)
+        template<typename U> bool operator!=(const Vector3<U> &v) const
         {
             return (m_x != v.m_x) || (m_y != v.m_y) || (m_z != v.m_z);
         }
@@ -178,6 +184,11 @@ namespace math
         template<typename U> Vector3<T> operator*(U u) const
         {
             return Vector3<T>(m_x * u, m_y * u, m_z * u);
+        }
+
+        template<typename U> Vector3<T> operator*(Vector3<U> u) const
+        {
+            return Vector3<T>(m_x * u.m_x, m_y * u.m_y, m_z * u.m_z);
         }
 
         template<typename U> Vector3<T> operator/(U u) const
@@ -222,11 +233,18 @@ namespace math
         {
             std::stringstream ss;
             //TODO: Why is typeid throwing segfault?
-            ss << "ez::Math::Vector3<" /*<< typeid(T).name()*/ << ">: [" << m_x << ", " << m_y << ", " << m_z << "].";
+            ss << "math::Vector3<" /*<< typeid(T).name()*/ << ">: [" << m_x << ", " << m_y << ", " << m_z << "].";
             return ss.str();
         }
     };
 
+    typedef Vector3<double> Vector3d;
+
+}
+
+template<typename T> math::Vector3<T> operator*(const double &d, const math::Vector3<T> &v)
+{
+    return math::Vector3<T>(v * d);
 }
 
 #endif // WAVY_MATH_H

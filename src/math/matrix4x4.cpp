@@ -1,4 +1,4 @@
-#include "Matrix4x4.hpp"
+#include "matrix4x4.hpp"
 
 /*
     Placeholder for makefile use
