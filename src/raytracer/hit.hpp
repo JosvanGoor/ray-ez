@@ -28,13 +28,17 @@ namespace raytracer
         bool hit() const;
         bool missed() const;
 
+        Shape* shape() const;
+        double distance() const;
+        Vector3d normal() const;
+
+        static Hit no_hit();
+        virtual std::string to_string() const;
+
+    protected:
         Shape *m_shape;
         double m_distance;
         Vector3d m_normal;
-
-        static Hit no_hit();
-
-        virtual std::string to_string() const;
     };
 
 }

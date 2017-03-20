@@ -5,10 +5,10 @@ namespace raytracer
 
     Hit Sphere::intersect(const Ray &ray)
     {
-        Vector3d oc = ray.m_origin - m_center;
+        Vector3d oc = ray.origin() - m_center;
 
-        double a = ray.m_direction.dot(ray.m_direction);
-        double b = 2 * oc.dot(ray.m_direction);
+        double a = ray.direction().dot(ray.direction());
+        double b = 2 * oc.dot(ray.direction());
         double c = oc.dot(oc) - (m_radius * m_radius);
         double disc = b * b - 4 * a * c;
         double t;
@@ -30,7 +30,7 @@ namespace raytracer
 
         Vector3d intersect = ray.at(t);
         Vector3d N = (intersect - m_center) / m_radius;
-        if(ray.m_direction.dot(N) > 0) N = -N;
+        if(ray.direction().dot(N) > 0) N = -N;
 
         return Hit(this, t, N);
     }

@@ -15,9 +15,7 @@ using namespace raytracer;
 int main(int argc, char **argv)
 {
     Camera cam(Vector3d(0, 0.5, 0), Vector3d(200, 200, 1000), Vector3d(200, 200, 0));
-    cam.m_image_width = 800;
-    cam.m_image_height = 800;
-    cam.m_supersamples = 4;
+    cam.set_image(800, 800, 2);
 
     Scene *scene = new Scene();
     scene->add_light(new PointLight(Vector3d(1.0), Vector3d(-200, 600, 1500)));
@@ -26,7 +24,7 @@ int main(int argc, char **argv)
     Material *red = new Material(Vector3d(0.14, 0.0, 0.0), Vector3d(0.7, 0.0, 0.0), Vector3d(0.5), 32);
     Material *yellow = new Material(Vector3d(0.16, 0.128, 0.0), Vector3d(0.8, 0.64, 0.0), Vector3d(0.0), 1);
     Material *orange = new Material(Vector3d(0.16, 0.08, 0.0), Vector3d(0.8, 0.4, 0.0), Vector3d(0.5), 32);
-    Material *gray = new Material(Vector3d(0.08), Vector3d(0.32), Vector3d(0.5), 1);
+    Material *gray = new Material(Vector3d(0.08), Vector3d(0.32), Vector3d(0.75), 256);
 
     Sphere *sp = new Sphere(Vector3d(90, 320, 100), 50);
     sp->material(blue);
@@ -59,7 +57,7 @@ int main(int argc, char **argv)
     rm.reflection_depth(8);
 
     std::cout << *scene << endl;
-    data::Image *img = rm.render();
+    data::Image *img = rm.render_threaded(8);
     img->write_to_file("image.png");
     
     delete img;

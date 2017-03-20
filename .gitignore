@@ -1,2 +1,5 @@
 *.o
 *.d
+build/structure.flag
+eztrace
+eztrace.exe

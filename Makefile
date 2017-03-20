@@ -34,7 +34,7 @@ OBJECTS = 						$(DATA_OBJECTS) \
 COMPILER = g++
 FLAGS = -std=c++14 -O3 -Wall -fomit-frame-pointer -ffast-math -flto
 #FLAGS = -std=c++14 -Wall -g
-LIBRARIES = -lm
+LIBRARIES = -lm -lpthread
 
 #directory structure
 SOURCE_DIRECTORY = src

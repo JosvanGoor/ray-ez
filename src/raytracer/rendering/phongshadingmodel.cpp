@@ -52,30 +52,30 @@ namespace raytracer
         if(min_hit.missed()) return m_background_color;
         static Vector3d black = Vector3d(0.0);
 
-        Vector3d hit = ray.at(min_hit.m_distance);
+        Vector3d hit = ray.at(min_hit.distance());
         Vector3d color;
 
-        color = min_hit.m_shape->material()->m_ambient;
+        color = min_hit.shape()->material()->m_ambient;
 
         //for all lights
         for(size_t i = 0; i < m_scene->lights().size(); ++i)
         {
-            Vector3d L = (m_scene->lights()[i]->m_position - hit).normalized();
-            Vector3d R = (2.0 * L.dot(min_hit.m_normal) * min_hit.m_normal - L).normalized();
+            Vector3d L = (m_scene->lights()[i]->position() - hit).normalized();
+            Vector3d R = (2.0 * L.dot(min_hit.normal()) * min_hit.normal() - L).normalized();
 
             //sharp shadows
-            if(m_shadows && m_scene->closest_hit(Ray(m_scene->lights()[i]->m_position, -L)).m_shape != min_hit.m_shape) continue;
+            if(m_shadows && m_scene->closest_hit(Ray(m_scene->lights()[i]->position(), -L)).shape() != min_hit.shape()) continue;
 
-            color += max(0.0, L.dot(min_hit.m_normal)) * min_hit.m_shape->color_at(hit) * m_scene->lights()[i]->m_color;
-            color += pow(max(0.0, R.dot(-ray.m_direction)), min_hit.m_shape->material()->m_specular_exponent) * min_hit.m_shape->material()->m_specular * m_scene->lights()[i]->m_color;
+            color += max(0.0, L.dot(min_hit.normal())) * min_hit.shape()->color_at(hit) * m_scene->lights()[i]->color();
+            color += pow(max(0.0, R.dot(-ray.direction())), min_hit.shape()->material()->m_specular_exponent) * min_hit.shape()->material()->m_specular * m_scene->lights()[i]->color();
         }
 
         if(reflections_left != 0)
         {
-            if(min_hit.m_shape->material()->m_specular != black)
+            if(min_hit.shape()->material()->m_specular != black)
             {
-                Vector3d R = ray.m_direction.reflect_over(min_hit.m_normal);
-                color += trace(Ray(hit, R), reflections_left - 1) * min_hit.m_shape->material()->m_specular;
+                Vector3d R = ray.direction().reflect_over(min_hit.normal());
+                color += trace(Ray(hit, R), reflections_left - 1) * min_hit.shape()->material()->m_specular;
             }
         }
         color.clamp();

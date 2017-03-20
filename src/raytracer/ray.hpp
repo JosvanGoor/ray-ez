@@ -16,8 +16,12 @@ namespace raytracer
         Vector3d at(double distance) const;
         virtual std::string to_string() const;
 
-        const Vector3d m_origin;
-        const Vector3d m_direction;
+        Vector3d origin() const;
+        Vector3d direction() const;
+
+    protected:
+        Vector3d m_origin;
+        Vector3d m_direction;
     };
 
 }

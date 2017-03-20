@@ -24,7 +24,7 @@ namespace raytracer
         for(size_t i = 0; i < m_shapes.size(); ++i)
         {
             Hit hit = m_shapes[i]->intersect(ray);
-            if(hit.m_distance < min_hit.m_distance)
+            if(hit.distance() < min_hit.distance())
             {
                 min_hit = hit;
             }

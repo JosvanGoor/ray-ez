@@ -16,6 +16,10 @@ namespace raytracer
         return m_shape == nullptr;
     }
 
+    double Hit::distance() const { return m_distance; }
+    Vector3d Hit::normal() const { return m_normal; }
+    Shape* Hit::shape() const { return m_shape; }
+
     Hit Hit::no_hit()
     {
         static Hit rval(nullptr, std::numeric_limits<double>::infinity());
