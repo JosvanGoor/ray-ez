@@ -7,11 +7,14 @@ Below is a list of things I implemented or am planning to implement, they can be
 * \* There is currently a problem with the functionality of this part
 
 ## Memory management:
+The project relies heavily on raw pointers in some places, I opted out of using smart pointers because these pointers often occur in "hot" code and I dont want to pay the performance overhead. To have some clarity about ownership and lifetime of some of the objects on the heap I will write the explanation below.
 
-#### Scene objects
+I (which is mostly a personal pledge to myself) will also make sure after any major change to the raytracer that a full run though valgrind will report no memory leaks/invalid writes/reads etc..
+
+#### Scene objects (& shapes)
 The scene objects are passed to rendermodels as pointer, but the rendermodel will never delete a scene object, as such a scene object may belong to more then 1 rendermodel at the same time and must be deleted manually after the rendermodels are unlinked.
 
-All pointers contained by the scene (shapes & lights) will be destroyed when the scene is destroyed.
+All pointers contained by the scene (shapes & lights) are owned by the scene and will be destroyed when the scene is destroyed.
 
 #### Material objects
 Material objects are owned by the Shape object that links to it, as such a material object should never be passed to more then 1 shape at a time. There is however one exception to this, The Triangle shape does not take ownedship of a material object. A triangle assumes the material object belongs to the mesh the triangle also belongs to and as such the destruction of the material is the responsibility of the mesh.
