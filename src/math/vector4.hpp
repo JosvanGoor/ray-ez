@@ -14,12 +14,12 @@
 #include <typeinfo>
 
 #include "math.hpp"
-#include "../core.hpp"
+#include "vector3.hpp"
 
 namespace math
 {
 
-    template<typename T = float> class Vector4 : public Object
+    template<typename T = float> class Vector4
     {
     public:
         T m_x;
@@ -89,7 +89,7 @@ namespace math
             m_w = m_w < min ? min : (m_w > max ? max : m_w);
         }
 
-        Vector4<T> clamp(T min, T max) const
+        Vector4<T> clamp(T min = 0.0, T max = 1.0) const
         {
             Vector4<T> rval;
 
@@ -99,6 +99,11 @@ namespace math
             rval.m_w = m_w < min ? min : (m_w > max ? max : m_w);
 
             return rval;
+        }
+
+        Vector3<T> xyz() const
+        {
+            return Vector3<T>(m_x, m_y, m_z);
         }
 
         ///////////////////////////////////////////////////////////////////////////////////////
@@ -229,6 +234,8 @@ namespace math
             return ss.str();
         }
     };
+
+    typedef Vector4<double> Vector4d;
 
 }
 

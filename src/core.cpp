@@ -44,6 +44,31 @@ std::string trim_back(const std::string &str)
     return str.substr(0, str.find_last_not_of(" \t\n\r") + 1);
 }
 
+std::vector<std::string> split(const std::string &str, char s)
+{
+    size_t pos = 0;
+    std::vector<std::string> rval;
+
+    while(true)
+    {
+        size_t pos2 = str.find_first_of(s, pos);
+
+        if(pos2 == std::string::npos) //if end of line
+        {
+            //push final result, break
+            rval.push_back(str.substr(pos, pos2));
+            break;
+        }
+
+        //push part and increment past the splitchar.
+        rval.push_back(str.substr(pos, pos2 - pos));
+        pos = pos2 + 1;
+    }
+
+    rval.shrink_to_fit();
+    return rval;
+}
+
 std::string get_line(std::istream& is)
 {
     std::string rval;

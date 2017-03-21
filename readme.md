@@ -53,6 +53,10 @@ This category contains certain classes designed specifically for the raytracer f
 This category contains light-types.
 * point-light: A light that emits light of a certain color from a certain point
 
+Idea for soft shadows: light-volumes, for example a line-light (tl-bar or whatever?) traces rays to the to-be-shadowed point from its width (maybe a 2d space). pointlights can use cones but maybe also make specialized lights for that, so make a light have actual shadowing.
+
+ps. think about shadows + refraction.
+
 ### rendering
 This category contains a base-class for a (virtual)renderer object and subclasses to determine the shading
 * !!depthshader: (debug-based) this class renders the scene based on the z-buffer.

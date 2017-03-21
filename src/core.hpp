@@ -9,7 +9,9 @@
 #include <exception>
 
 #include "math/vector3.hpp"
+#include "math/vector4.hpp"
 using math::Vector3d;
+using math::Vector4d;
 
 class Object
 {
@@ -37,6 +39,8 @@ protected:
 std::string trim(const std::string &str);
 std::string trim_front(const std::string &str);
 std::string trim_back(const std::string &str);
+
+std::vector<std::string> split(const std::string &str, char s);
 
 std::string get_line(std::istream &is);
 std::vector<unsigned char> read_file(std::string file);
