@@ -32,7 +32,6 @@ public:
 
 protected:
     Exception();
-    std::string m_source;
     std::string m_message;
 };
 

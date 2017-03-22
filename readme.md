@@ -33,6 +33,12 @@ This category contains classes to parse scenes.
 * !json: This file contains json parsing functions
 * !stepdocument: This class contains functions used by parsers.
 
+### Lib
+This category contains 3rd-party code I use.
+ * lodepng: http://lodev.org/lodepng/
+ * glm: Using an older version but found on: http://devernay.free.fr/hacks/glm/.
+    + This is set to be replaced by native functionality in the future.
+
 ### Math
 * !!algebra: contains functions to solve certain formula's
 * !math: contains certain commonly used constants and functions

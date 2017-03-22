@@ -16,7 +16,7 @@ using namespace raytracer;
 int main(int argc, char **argv)
 {
     Camera cam(Vector3d(0, 0.5, 0), Vector3d(200, 200, 1000), Vector3d(200, 200, 0));
-    cam.set_image(800, 800, 2);
+    cam.set_image(400, 400, 1);
 
     Scene *scene = new Scene();
     scene->add_light(new PointLight(Vector3d(1.0), Vector3d(-200, 600, 1500)));
@@ -67,31 +67,10 @@ int main(int argc, char **argv)
     delete img;
     delete scene;
 
-    std::string s = "hoi ik heet jos hoe  heet jij?";
-    std::string s2 = "hallo";
-    std::string s3 = "";
-
-    std::vector<std::string> vs = split(s, ' ');
-    std::vector<std::string> vs2 = split(s2, ' ');
-    std::vector<std::string> vs3 = split(s3, ' ');
-
-    for(std::string ss : vs)
-    {
-        std::cout << "entry: " << ss << " - " << ss.length() << std::endl;
-    }
-    std::cout << std::endl;
-
-    for(std::string ss : vs2)
-    {
-        std::cout << "entry: " << ss << std::endl;
-    }
-    std::cout << std::endl;
-
-    for(std::string ss : vs3)
-    {
-        std::cout << "entry: " << ss << std::endl;
-    }
-    std::cout << std::endl;
+    std::vector<ObjMaterial> mats = parse_mtl_file("devilduk.mtl");
+    std::cout << mats.size() << std::endl;
+    std::cout << Material(mats[0]) << std::endl;
+    std::cout << Material(mats[1]) << std::endl;
 
     return 0;
 }

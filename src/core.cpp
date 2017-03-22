@@ -14,17 +14,18 @@ std::ostream& operator<<(std::ostream &os, const Object &obj)
     return os;
 }
 
-Exception::Exception() : m_source("unknown"), m_message("no message") {}
-Exception::Exception(const std::string &source, const std::string &message) : m_source(source), m_message(message) {}
+Exception::Exception() : m_message("no message") {}
+Exception::Exception(const std::string &source, const std::string &message)
+ : m_message("Exception at " + source + ": " + message) {}
 
 const char* Exception::what() const noexcept
 {
-    return message().c_str();
+    return m_message.c_str();
 }
 
 std::string Exception::message() const
 {
-    return "Exception at " + m_source + ": " + m_message;
+    return m_message;
 }
 
 std::string trim(const std::string &str)

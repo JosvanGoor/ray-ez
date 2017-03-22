@@ -1,5 +1,5 @@
 #include "image.hpp"
-#include "lodepng.hpp"
+#include "../lib/lodepng.hpp"
 
 namespace data
 {

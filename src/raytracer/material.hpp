@@ -8,22 +8,6 @@
 namespace raytracer
 {
 
-    class Material : public Object
-    {
-    public:
-        Material(Vector3d am, Vector3d diff, Vector3d spec, double exp) 
-            : m_ambient(am), m_diffuse(diff), m_specular(spec), m_specular_exponent(exp) { }
-
-        virtual ~Material() { }
-
-        virtual std::string to_string() const;
-
-        const Vector3d m_ambient;
-        const Vector3d m_diffuse;
-        const Vector3d m_specular;
-        const double m_specular_exponent;
-    };
-
     //Material object parsed from mtl file.
     class ObjMaterial
     {
@@ -49,6 +33,25 @@ namespace raytracer
         std::string m_ambient_texture;
         std::string m_diffuse_texture;
         std::string m_specular_texture;
+    };
+
+    class Material : public Object
+    {
+    public:
+        Material(Vector3d am, Vector3d diff, Vector3d spec, double exp) 
+            : m_ambient(am), m_diffuse(diff), m_specular(spec), m_specular_exponent(exp) { }
+
+        Material(const ObjMaterial &mat)
+            : m_ambient(mat.m_ambient), m_diffuse(mat.m_diffuse), m_specular(mat.m_specular), 
+              m_specular_exponent(mat.m_specular_exponent) { }
+        virtual ~Material() { }
+
+        virtual std::string to_string() const;
+
+        const Vector3d m_ambient;
+        const Vector3d m_diffuse;
+        const Vector3d m_specular;
+        const double m_specular_exponent;
     };
 
     std::vector<ObjMaterial> parse_mtl_file(const std::string &file);

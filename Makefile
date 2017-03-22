@@ -6,8 +6,9 @@ EXECUTABLE = eztrace
 DATA_OBJECTS =					data/datanode.o \
 								data/image.o \
 								data/json.o \
-								data/lodepng.o \
 								data/stepdocument.o
+LIB_OBJECTS =					lib/glm.o \
+								lib/lodepng.o
 MATH_OBJECTS =					math/math.o \
 								math/matrix4x4.o \
 								math/vector3.o \
@@ -25,6 +26,7 @@ RAYTRACER_SHAPES_OBJECTS = 		raytracer/shapes/shape.o \
 								raytracer/shapes/triangle.o
 
 OBJECTS = 						$(DATA_OBJECTS) \
+								$(LIB_OBJECTS) \
 								$(MATH_OBJECTS) \
 								$(RAYTRACER_OBJECTS) \
 								$(RAYTRACER_RENDERING_OBJECTS) \
