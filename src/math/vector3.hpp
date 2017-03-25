@@ -21,7 +21,7 @@ namespace math
     template<typename T = float> class Vector3
     {
     public:
-        T m_x;
+        T m_x; 
         T m_y;
         T m_z;
 
@@ -109,6 +109,13 @@ namespace math
             Vector3<T> ret = (*this - 2 * (*this).dot(normal) * normal);
             return ret.normalized();
         }
+
+        T x() const { return m_x; }
+        T y() const { return m_y; }
+        T z() const { return m_z; }
+        void x(T t) { m_x = t; }
+        void y(T t) { m_y = t; }
+        void z(T t) { m_z = t; }
 
         ///////////////////////////////////////////////////////////////////////////////////////
         //////////////////////////////////////Operators////////////////////////////////////////

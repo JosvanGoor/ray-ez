@@ -17,7 +17,7 @@ namespace raytracer
     {
     public:
         Shape() : m_material(nullptr) {}
-        virtual ~Shape() { delete m_material; }
+        virtual ~Shape() { if(m_material) { delete m_material; /*std::cout << "deleted material\n";*/ } }
 
         virtual Material* material() const;
         virtual void material(Material *mat);

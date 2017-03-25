@@ -21,7 +21,8 @@ RAYTRACER_OBJECTS =				raytracer/camera.o \
 								raytracer/scene.o
 RAYTRACER_RENDERING_OBJECTS =	raytracer/rendering/rendermodel.o \
 								raytracer/rendering/phongshadingmodel.o
-RAYTRACER_SHAPES_OBJECTS = 		raytracer/shapes/shape.o \
+RAYTRACER_SHAPES_OBJECTS = 		raytracer/shapes/mesh.o \
+								raytracer/shapes/shape.o \
 								raytracer/shapes/sphere.o \
 								raytracer/shapes/triangle.o
 

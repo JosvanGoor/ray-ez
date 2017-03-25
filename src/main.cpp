@@ -7,6 +7,7 @@ using namespace std;
 #include "core.hpp"
 #include "raytracer/shapes/triangle.hpp"
 #include "raytracer/shapes/sphere.hpp"
+#include "raytracer/shapes/mesh.hpp"
 #include "data/image.hpp"
 #include "raytracer/rendering/rendermodel.hpp"
 #include "raytracer/rendering/phongshadingmodel.hpp"
@@ -15,8 +16,8 @@ using namespace raytracer;
 
 int main(int argc, char **argv)
 {
-    Camera cam(Vector3d(0, 0.5, 0), Vector3d(200, 200, 1000), Vector3d(200, 200, 0));
-    cam.set_image(400, 400, 1);
+    Camera cam(Vector3d(0, 0.33333, 0), Vector3d(400, 200, 1000), Vector3d(100, 200, 50));
+    cam.set_image(1200, 1200, 2);
 
     Scene *scene = new Scene();
     scene->add_light(new PointLight(Vector3d(1.0), Vector3d(-200, 600, 1500)));
@@ -38,27 +39,23 @@ int main(int argc, char **argv)
     sp = new Sphere(Vector3d(290, 170, 150), 50);
     sp->material(red);
     scene->add_shape(sp);
-
-    //sp = new Sphere(Vector3d(140, 220, 400), 50);
-    Triangle *tr = new Triangle(Vector3d(210, 270, 300),
-                                Vector3d(90, 320, 100),
-                                Vector3d(110, 130, 200));
-    tr->material(yellow);
-    scene->add_shape(tr);
-
+    
     sp = new Sphere(Vector3d(110, 130, 200), 50);
     sp->material(orange);
     scene->add_shape(sp);
 
     sp = new Sphere(Vector3d(200, 200, -1000), 1000);
     sp->material(gray);
-    scene->add_shape(sp);
+    //scene->add_shape(sp);
+
+    Mesh *m = new Mesh("models/devilduk.obj", yellow, Vector3d(140, 220, 400), 150);
+    scene->add_shape(m);
 
     PhongShadingModel rm;
     rm.camera(cam);
     rm.scene(scene);
     rm.enable_shadows();
-    rm.reflection_depth(8);
+    rm.reflection_depth(4);
 
     std::cout << *scene << endl;
     data::Image *img = rm.render_threaded(8);
@@ -66,11 +63,6 @@ int main(int argc, char **argv)
     
     delete img;
     delete scene;
-
-    std::vector<ObjMaterial> mats = parse_mtl_file("devilduk.mtl");
-    std::cout << mats.size() << std::endl;
-    std::cout << Material(mats[0]) << std::endl;
-    std::cout << Material(mats[1]) << std::endl;
 
     return 0;
 }
