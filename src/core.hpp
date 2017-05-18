@@ -44,8 +44,4 @@ std::vector<std::string> split(const std::string &str, char s);
 std::string get_line(std::istream &is);
 std::vector<unsigned char> read_file(std::string file);
 
-//void print_if_opengl_error(std::string msg);
-//std::string translate_last_opengl_error();
-//std::string translate_opengl_error_code(GLenum error);
-
 #endif
