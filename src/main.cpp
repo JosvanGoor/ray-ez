@@ -16,8 +16,8 @@ using namespace raytracer;
 
 int main(int argc, char **argv)
 {
-    Camera cam(Vector3d(0, 0.33333, 0), Vector3d(400, 200, 1000), Vector3d(100, 200, 50));
-    cam.set_image(1200, 1200, 2);
+    Camera cam(Vector3d(0, 0.5, 0), Vector3d(400, 200, 1000), Vector3d(100, 200, 50));
+    cam.set_image(800, 800, 2);
 
     Scene *scene = new Scene();
     scene->add_light(new PointLight(Vector3d(1.0), Vector3d(-200, 600, 1500)));
@@ -46,7 +46,7 @@ int main(int argc, char **argv)
 
     sp = new Sphere(Vector3d(200, 200, -1000), 1000);
     sp->material(gray);
-    //scene->add_shape(sp);
+    scene->add_shape(sp);
 
     Mesh *m = new Mesh("models/devilduk.obj", yellow, Vector3d(140, 220, 400), 150);
     scene->add_shape(m);
